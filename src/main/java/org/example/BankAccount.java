@@ -4,11 +4,11 @@ public class BankAccount {
     private double balance;
 
     public BankAccount(double initiationBalance) {
-        this.balance = balance;
+        this.balance = initiationBalance;
     }
 
     public double getBalance() {
-        return balance;
+        return this.balance;
     }
 
     public void deposit(double amount) {
