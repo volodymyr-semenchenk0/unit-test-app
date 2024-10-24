@@ -17,10 +17,6 @@ public class BankAccount {
         return this.balance.setScale(2,  RoundingMode.HALF_UP);
     }
 
-    public double getBalanceInDouble() {
-        return this.balance.setScale(2,  RoundingMode.HALF_UP).doubleValue();
-    }
-
     public void deposit(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Deposit amount must be positive.");
