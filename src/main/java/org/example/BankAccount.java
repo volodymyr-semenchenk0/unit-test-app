@@ -1,30 +1,40 @@
 package org.example;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class BankAccount {
-    private double balance;
+    private BigDecimal balance;
 
     public BankAccount(double initiationBalance) {
-        this.balance = initiationBalance;
+        if (initiationBalance <= 0) {
+            throw new IllegalArgumentException("Initial balance cannot be negative");
+        }
+        this.balance = BigDecimal.valueOf(initiationBalance);
     }
 
-    public double getBalance() {
-        return this.balance;
+    public BigDecimal getBalance() {
+        return this.balance.setScale(2,  RoundingMode.HALF_UP);
+    }
+
+    public double getBalanceInDouble() {
+        return this.balance.setScale(2,  RoundingMode.HALF_UP).doubleValue();
     }
 
     public void deposit(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Deposit amount must be positive.");
         }
-        balance += amount;
+        this.balance = this.balance.add(BigDecimal.valueOf(amount));
     }
 
     public void withdraw(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Withdrawal amount must be positive.");
         }
-        if (amount > balance) {
-            throw new IllegalArgumentException("Insufficient funds.");
+        if (amount > this.balance.doubleValue()) {
+            throw new IllegalStateException("Insufficient funds.");
         }
-        balance -= amount;
+        this.balance = this.balance.subtract(BigDecimal.valueOf(amount));
     }
 }
